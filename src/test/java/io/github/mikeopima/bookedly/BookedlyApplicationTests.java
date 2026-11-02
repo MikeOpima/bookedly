@@ -1,10 +1,10 @@
-package org.example.book2go;
+package io.github.mikeopima.bookedly;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Book2goApplicationTests {
+class BookedlyApplicationTests {
 
 	@Test
 	void contextLoads() {

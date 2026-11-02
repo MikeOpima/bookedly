@@ -1,13 +1,13 @@
-package org.example.book2go;
+package io.github.mikeopima.bookedly;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Book2goApplication {
+public class BookedlyApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Book2goApplication.class, args);
+		SpringApplication.run(BookedlyApplication.class, args);
 	}
 
 }
