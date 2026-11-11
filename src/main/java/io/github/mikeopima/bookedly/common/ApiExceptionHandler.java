@@ -2,6 +2,8 @@ package io.github.mikeopima.bookedly.common;
 
 import io.github.mikeopima.bookedly.auth.EmailAlreadyUsedException;
 import io.github.mikeopima.bookedly.auth.InvalidCredentialsException;
+import io.github.mikeopima.bookedly.booking.SlotNotAvailableException;
+import io.github.mikeopima.bookedly.booking.SlotNotFoundException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
@@ -32,5 +34,15 @@ public class ApiExceptionHandler {
 	@ExceptionHandler(InvalidCredentialsException.class)
 	ProblemDetail handleInvalidCredentials(InvalidCredentialsException ex) {
 		return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, ex.getMessage());
+	}
+
+	@ExceptionHandler(SlotNotFoundException.class)
+	ProblemDetail handleSlotNotFound(SlotNotFoundException ex) {
+		return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+	}
+
+	@ExceptionHandler(SlotNotAvailableException.class)
+	ProblemDetail handleSlotNotAvailable(SlotNotAvailableException ex) {
+		return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage());
 	}
 }
