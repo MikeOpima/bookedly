@@ -50,6 +50,11 @@ public class User {
 		this.fullName = fullName;
 	}
 
+	/** Gives this user admin rights. They take effect the next time the user logs in. */
+	public void promoteToAdmin() {
+		this.role = Role.ADMIN;
+	}
+
 	public Long getId() { return id; }
 	public String getEmail() { return email; }
 	public String getPasswordHash() { return passwordHash; }

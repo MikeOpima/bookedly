@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -26,9 +27,11 @@ import org.springframework.security.web.SecurityFilterChain;
  * Stateless JWT security:
  * - /api/auth/register and /api/auth/login are open to everyone
  * - every other endpoint needs "Authorization: Bearer <token>"
+ * - admin-only endpoints use @PreAuthorize("hasRole('ADMIN')"); customers get 403
  * - no server-side sessions or cookies, so CSRF protection isn't needed
  */
 @Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
 
 	@Bean
