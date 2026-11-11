@@ -50,3 +50,27 @@ Authorization: Bearer {{adminToken}}
 ### 8. Customer token on an admin endpoint -> 403
 GET http://localhost:8080/api/admin/users
 Authorization: Bearer {{token}}
+
+### 9. Open days you can book (log in first with request 1 or 2)
+GET http://localhost:8080/api/slots
+Authorization: Bearer {{token}}
+
+> {% client.global.set("slotId", response.body[0].id); %}
+
+### 10. Book the first open day from request 9 -> 201
+POST http://localhost:8080/api/bookings
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "slotId": {{slotId}}
+}
+
+### 11. Book the same day again -> 409
+POST http://localhost:8080/api/bookings
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "slotId": {{slotId}}
+}

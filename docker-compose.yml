@@ -1,0 +1,17 @@
+# Local Postgres for Bookedly. Start it with:  docker compose up -d
+services:
+  postgres:
+    # Pinned: Postgres 18+ stores its data in a different folder, which breaks the volume below
+    image: postgres:17
+    container_name: bookedly-postgres
+    environment:
+      POSTGRES_DB: bookedly
+      POSTGRES_USER: bookedly
+      POSTGRES_PASSWORD: bookedly
+    ports:
+      - "5432:5432"
+    volumes:
+      - bookedly_data:/var/lib/postgresql/data
+
+volumes:
+  bookedly_data:
