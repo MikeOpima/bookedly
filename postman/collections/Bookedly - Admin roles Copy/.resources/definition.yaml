@@ -1,0 +1,10 @@
+$kind: collection
+description: Checks that only admins can use /api/admin endpoints and that an admin can promote a customer. Start the app, then Run collection. Uses the dev admin from application.properties.
+variables:
+  baseUrl: http://localhost:8080
+  adminEmail: admin@bookedly.local
+  adminPassword: admin-dev-password
+  adminToken: ""
+  customerEmail: ""
+  customerToken: ""
+  customerId: ""

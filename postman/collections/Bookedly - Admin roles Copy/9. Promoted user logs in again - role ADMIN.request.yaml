@@ -1,0 +1,21 @@
+$kind: http-request
+name: 9. Promoted user logs in again -> role ADMIN
+url: "{{baseUrl}}/api/auth/login"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "email": "{{customerEmail}}",
+      "password": "password123"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 200 OK", () => pm.response.to.have.status(200));
+      pm.test("Role is ADMIN", () => pm.expect(pm.response.json().user.role).to.eql("ADMIN"));
+      pm.collectionVariables.set("customerToken", pm.response.json().token);
+    language: text/javascript
+order: 9000

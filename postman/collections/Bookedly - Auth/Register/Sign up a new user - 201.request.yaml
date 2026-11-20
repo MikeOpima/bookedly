@@ -1,0 +1,39 @@
+$kind: http-request
+name: Sign up a new user -> 201
+url: "{{baseUrl}}/api/auth/register"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "email": "{{email}}",
+      "password": "{{password}}",
+      "fullName": "Mike Opima"
+    }
+scripts:
+  - type: beforeRequest
+    code: |-
+      // Fresh email every run, so the in-memory DB never says "already used"
+      pm.collectionVariables.set("email", `mike+${Date.now()}@example.com`);
+    language: text/javascript
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 201 Created", () => pm.response.to.have.status(201));
+      const body = pm.response.json();
+      pm.test("Returns a Bearer token", () => {
+          pm.expect(body.token).to.be.a("string").and.not.empty;
+          pm.expect(body.tokenType).to.eql("Bearer");
+          pm.expect(body.expiresIn).to.be.above(0);
+      });
+      pm.test("New users are CUSTOMERs", () => pm.expect(body.user.role).to.eql("CUSTOMER"));
+      pm.test("Email is echoed back", () => pm.expect(body.user.email).to.eql(pm.collectionVariables.get("email")));
+      pm.test("Password is never returned", () => {
+          pm.expect(pm.response.text()).to.not.include(pm.collectionVariables.get("password"));
+          pm.expect(body.user).to.not.have.property("password");
+          pm.expect(body.user).to.not.have.property("passwordHash");
+      });
+      pm.collectionVariables.set("token", body.token);
+    language: text/javascript
+order: 1000

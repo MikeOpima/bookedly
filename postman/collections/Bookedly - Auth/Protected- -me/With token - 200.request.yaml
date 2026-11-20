@@ -1,0 +1,13 @@
+$kind: http-request
+name: With token -> 200
+url: "{{baseUrl}}/api/auth/me"
+method: GET
+headers:
+  Authorization: Bearer {{token}}
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 200 OK", () => pm.response.to.have.status(200));
+      pm.test("Returns the logged-in user", () => pm.expect(pm.response.json().email).to.eql(pm.collectionVariables.get("email")));
+    language: text/javascript
+order: 1000

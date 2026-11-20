@@ -1,0 +1,11 @@
+$kind: http-request
+name: Fake token -> 401
+url: "{{baseUrl}}/api/auth/me"
+method: GET
+headers:
+  Authorization: "{{bearer_token_0fcb}}"
+scripts:
+  - type: afterResponse
+    code: pm.test("Status is 401 Unauthorized", () => pm.response.to.have.status(401));
+    language: text/javascript
+order: 3000

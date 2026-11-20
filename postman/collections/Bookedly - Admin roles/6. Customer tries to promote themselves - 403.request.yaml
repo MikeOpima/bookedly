@@ -1,0 +1,11 @@
+$kind: http-request
+name: 6. Customer tries to promote themselves -> 403
+url: "{{baseUrl}}/api/admin/users/{{customerId}}/promote"
+method: POST
+headers:
+  Authorization: Bearer {{customerToken}}
+scripts:
+  - type: afterResponse
+    code: pm.test("Status is 403 Forbidden", () => pm.response.to.have.status(403));
+    language: text/javascript
+order: 6000

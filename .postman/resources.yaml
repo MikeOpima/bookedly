@@ -1,0 +1,17 @@
+# Use this workspace to collaborate
+workspace:
+  id: 92e490ab-25ba-4f12-85c9-d9c27ed881d4
+
+# Each entry here maps a local resource to one or more corresponding objects in Postman Cloud
+
+cloudResources:
+  collections:
+    ../postman/collections/Bookedly - Auth: 1649de97-ef86-4c95-8e0c-7fb8f22e13cb
+    ../postman/collections/Bookedly - Admin roles: 8f7571d0-9695-4a01-b916-fdfa18c6036f
+    ../postman/collections/Bookedly - Admin roles Copy: 115a7b66-6458-4e81-9023-5dfadaff410d
+
+# All resources in the `postman/` folder are automatically registered in Local View.
+# Point to additional files outside the `postman/` folder to register them individually. Example:
+#localResources:
+#  collections:
+#    - ../tests/E2E Test Collection/

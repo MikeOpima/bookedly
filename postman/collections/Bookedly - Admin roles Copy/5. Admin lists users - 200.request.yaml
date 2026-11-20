@@ -1,0 +1,16 @@
+$kind: http-request
+name: 5. Admin lists users -> 200
+url: "{{baseUrl}}/api/admin/users"
+method: GET
+headers:
+  Authorization: Bearer {{adminToken}}
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 200 OK", () => pm.response.to.have.status(200));
+      const users = pm.response.json();
+      pm.test("Includes the new customer", () =>
+          pm.expect(users.map(u => u.email)).to.include(pm.collectionVariables.get("customerEmail")));
+      pm.test("No password hashes", () => users.forEach(u => pm.expect(u).to.not.have.property("passwordHash")));
+    language: text/javascript
+order: 5000

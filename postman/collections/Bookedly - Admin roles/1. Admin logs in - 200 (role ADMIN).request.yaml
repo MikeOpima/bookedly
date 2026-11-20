@@ -1,0 +1,21 @@
+$kind: http-request
+name: 1. Admin logs in -> 200 (role ADMIN)
+url: "{{baseUrl}}/api/auth/login"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "email": "{{adminEmail}}",
+      "password": "{{adminPassword}}"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 200 OK", () => pm.response.to.have.status(200));
+      pm.test("Role is ADMIN", () => pm.expect(pm.response.json().user.role).to.eql("ADMIN"));
+      pm.collectionVariables.set("adminToken", pm.response.json().token);
+    language: text/javascript
+order: 1000

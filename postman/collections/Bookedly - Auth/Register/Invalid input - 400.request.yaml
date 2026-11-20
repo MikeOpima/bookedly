@@ -1,0 +1,26 @@
+$kind: http-request
+name: Invalid input -> 400
+url: "{{baseUrl}}/api/auth/register"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "email": "not-an-email",
+      "password": "short",
+      "fullName": ""
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 400 Bad Request", () => pm.response.to.have.status(400));
+      const errors = pm.response.json().errors;
+      pm.test("Lists an error for each bad field", () => {
+          pm.expect(errors).to.have.property("email");
+          pm.expect(errors).to.have.property("password");
+          pm.expect(errors).to.have.property("fullName");
+      });
+    language: text/javascript
+order: 3000

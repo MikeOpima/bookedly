@@ -1,0 +1,26 @@
+$kind: collection
+description: Checks sign-up, log-in and the protected /me endpoint. Start the app, then run the whole collection (Run collection). Every request has automatic tests.
+variables:
+  - key: baseUrl
+    value: http://localhost:8080
+    disabled: false
+    secret: false
+  - key: email
+    value: ""
+    disabled: false
+    secret: false
+  - key: password
+    value: password123
+    disabled: false
+    secret: false
+  - key: token
+    value: ""
+    disabled: false
+    secret: false
+  - key: badLoginDetail
+    value: ""
+    disabled: false
+    secret: false
+  - key: bearer_token_0fcb
+    secret: true
+    disabled: false

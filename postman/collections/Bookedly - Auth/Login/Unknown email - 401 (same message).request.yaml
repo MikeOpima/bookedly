@@ -1,0 +1,21 @@
+$kind: http-request
+name: Unknown email -> 401 (same message)
+url: "{{baseUrl}}/api/auth/login"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "email": "nobody@example.com",
+      "password": "{{password}}"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 401 Unauthorized", () => pm.response.to.have.status(401));
+      pm.test("Same message as wrong password (doesn't reveal which emails exist)", () =>
+          pm.expect(pm.response.json().detail).to.eql(pm.collectionVariables.get("badLoginDetail")));
+    language: text/javascript
+order: 3000

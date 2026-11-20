@@ -1,0 +1,13 @@
+$kind: http-request
+name: 7. Admin promotes customer -> 200
+url: "{{baseUrl}}/api/admin/users/{{customerId}}/promote"
+method: POST
+headers:
+  Authorization: Bearer {{adminToken}}
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 200 OK", () => pm.response.to.have.status(200));
+      pm.test("Role is now ADMIN", () => pm.expect(pm.response.json().role).to.eql("ADMIN"));
+    language: text/javascript
+order: 7000

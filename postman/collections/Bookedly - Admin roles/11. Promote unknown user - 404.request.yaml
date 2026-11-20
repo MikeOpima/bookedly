@@ -1,0 +1,11 @@
+$kind: http-request
+name: 11. Promote unknown user -> 404
+url: "{{baseUrl}}/api/admin/users/999999/promote"
+method: POST
+headers:
+  Authorization: Bearer {{adminToken}}
+scripts:
+  - type: afterResponse
+    code: pm.test("Status is 404 Not Found", () => pm.response.to.have.status(404));
+    language: text/javascript
+order: 11000

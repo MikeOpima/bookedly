@@ -1,0 +1,27 @@
+$kind: http-request
+name: 2. Customer signs up -> 201
+url: "{{baseUrl}}/api/auth/register"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "email": "{{customerEmail}}",
+      "password": "password123",
+      "fullName": "Test Customer"
+    }
+scripts:
+  - type: beforeRequest
+    code: pm.collectionVariables.set("customerEmail", `customer+${Date.now()}@example.com`);
+    language: text/javascript
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 201 Created", () => pm.response.to.have.status(201));
+      const body = pm.response.json();
+      pm.test("Role is CUSTOMER", () => pm.expect(body.user.role).to.eql("CUSTOMER"));
+      pm.collectionVariables.set("customerToken", body.token);
+      pm.collectionVariables.set("customerId", body.user.id);
+    language: text/javascript
+order: 2000
